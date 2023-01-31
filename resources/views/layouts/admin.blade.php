@@ -13,7 +13,7 @@
         
         <!--Script-->
         {{--Laravel標準で用意されているJAvascriptを読み込む--}}
-        <script src="`{{ secure_asset('js/app.js') }}" defer></script>
+        <script src="{{ secure_asset('js/app.js') }}" defer></script>
         
         <!--Fonts-->
         <link rel="dsn-prefetch" href="https://fonts.gstatic.com">

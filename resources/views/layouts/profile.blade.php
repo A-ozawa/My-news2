@@ -9,11 +9,11 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <!--各ページごろにタイトルタグを入れるために空けておく
         -->
-        <title>@yield('titlr')</title>
+        <title>@yield('title')</title>
         
         <!--Script-->
         {{--Laravel標準で用意されているJAvascriptを読み込む--}}
-        <script src="`{{ secure_asset('js/app.js') }}" defer></script>
+        <script src="{{ secure_asset('js/app.js') }}" defer></script>
         
         <!--Fonts-->
         <link rel="dsn-prefetch" href="https://fonts.gstatic.com">
@@ -47,6 +47,34 @@
                         
                         <!--Right Side Of Navbar-->
                         <ul class="navbar-nav">
+                            
+                        {{-- ログインしてなかったらログイン画面へのリンクを表示　--}}
+                        
+                        @guest
+                            <li><a class="nav-link" href=" {{ route('login') }}">{{ __('messages.login') }}</a></li>
+                        {{-- ログインしていたらユーザー名とログアウトボタンを表示 --}}
+                        
+                        @else
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" date-bs-toggle="dropdown" aria-expanded="false">
+                                    {{  Auth::user()->name }} <span class="caret"></span>
+                                </a>
+                                
+                                
+                              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <a class="dropdown-item" href="{{ route('logout') }}"
+                                  onclick="event.preventDefault();
+                                  document.getElementById('logout-form').submit();">
+                                      {{__('messages.logout') }}
+                                  </a>
+                                  
+                                  <form id="logout-form" action="{{ route('logout') }}" methd="POST" style="display:none;">
+                                      
+                                      @csrf
+                                  </form>
+                              </div>    
+                            </li>
+                            @endguest
                         </ul>
                     </div>
                 </div>
